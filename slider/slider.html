@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Слайдер</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        *{
+        margin: 0;
+        padding: 0;
+        }
+        
+        #slider{
+            width: 700px;
+            height: 340px;
+            overflow: hidden;
+            position: relative;
+        }
+        #prev, #next{
+            float: left;
+            text-decoration: none;
+            width: 30px;
+            margin: 130px 10px;
+            font-family: sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+        }
+        ul#control {
+            list-style: none;
+            display: block;
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            bottom: 10px;
+        }
+        ul#control li {
+            height: 20px;
+            width: 20px;
+            background-color: #82C3C8;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        ul#control li.active {
+            background-color: #E8151D;
+        }
+        #slid {
+            display: block;
+            float: left;
+            overflow: hidden;
+            width: 600px;
+            height: 300px;
+            position: relative;
+        }
+        #slid>ul {
+            display: block;
+            height: 300px;
+            width: 9999px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #slid>ul>li {
+            list-style: none;
+            float: left;
+            display: block;
+            overflow: hidden;
+            width: 600px;
+            height: 300px;
+        }
+        #slid>ul>li>img {
+            width: 600px;
+            height: 300px;
+        }
+    </style>
+
+    <script type="text/javascript" src="../lab/elab.js"></script>
+    <script type="text/javascript" src="slider.js"></script>
+
+    <script type="text/javascript">
+        slider('slid', {
+            'direction': 'right',   // направления
+            'width': 600,           // ширина слайда
+            'step': 2000            // время пока слайда
+        });
+    </script>
+</head>
+<body>
+    <h1>Слайдер</h1>
+    <div id="slider">
+        <a href="#" id="prev"><<</a>
+        <div id="slid">
+            <ul>
+                <li>
+                    <img src="images/img1.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/img2.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/img3.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/img4.jpg" alt="" />
+                </li>
+                <li>
+                    <img src="images/img5.jpg" alt="" />
+                </li>
+            </ul>
+        </div>
+        <a href="#" id="next">>></a>
+        <ul id="control"></ul>
+    </div>
+</body>
+</html>

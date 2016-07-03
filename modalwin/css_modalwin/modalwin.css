@@ -1,0 +1,31 @@
+#liteboxFon {
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0;
+  overflow: hidden; }
+#liteboxFon #litebox {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  background: #fff;
+  padding: 5px;
+  position: absolute; }
+#liteboxFon #litebox img {
+  background-color: #fff;
+  display: block;
+}
+#liteboxFon #litebox #liteboxClose {
+  position: absolute;
+  right: -27px;
+  top: -27px;
+  background: url("butClose.png") 0 0 no-repeat;
+  height: 27px;
+  width: 27px; }
+#liteboxFon #litebox #liteboxClose:hover {
+  background: url("butClose.png") 0 -27px no-repeat; }

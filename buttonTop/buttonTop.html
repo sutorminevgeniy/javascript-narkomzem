@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Кнопка вверх</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style type="text/css">
+        .content{
+            background-color: #f99;
+        }
+        .content p {
+            height: 200px;
+            background-color: #5A70AF;
+        }
+        .content div {
+            height: 200px;
+        }
+        
+        #sTop{
+            display: none;
+            background-color: #752929;
+            color: #fff;
+            cursor: pointer;
+            text-decoration: none;
+            padding: 10px;
+            bottom: 30px;
+            left: 30px;
+            position: fixed;
+        }
+    </style>
+
+    <script type="text/javascript" src="../lab/elab.js"></script>
+    <script type="text/javascript" src="buttonTop.js"></script>
+    <script type="text/javascript">
+        buttonTop('sTop', { 
+            'time': 1000,
+            'showTop': 100
+        });
+    </script>
+</head>
+<body>
+    <div class="content">
+        <h1>Кнопка "Вверх"</h1>
+        <p></p>
+        <div></div>
+        <p></p>
+        <div></div>
+        <p></p>
+        <div></div>
+    </div>
+
+    <a href="#" id="sTop">Вверх</a>
+</body>
+</html>

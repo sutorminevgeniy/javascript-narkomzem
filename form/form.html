@@ -1,0 +1,129 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>Проверка формы перед отправкой</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+	    form div { 
+		padding: 10px 0 0 0;
+		position: relative;
+	    }
+	    form .mesageForm { 
+		position: absolute;
+		background-color: #FFCDCD;
+		border: 1px solid red;
+		font-size: 13px;
+		top: 0;
+		left: 210px;
+		padding: 2px 5px;
+	    }
+	    form div input { 
+		border-style: solid; 
+		border-color: #999 
+	    }
+	    a {
+		background:silver;
+		color:black;
+		border:3px groove silver;
+		text-decoration: none;
+		font-weight:bold
+	    }
+	    div.button {
+		margin-top:10px
+	    }
+	</style>
+	<script type="text/javascript" src="../lab/elab.js"></script>
+	<script type="text/javascript">
+	    addEvent(window, "load", function(){
+		
+		// Вызов функции для проверки формы
+		formValidate('myForm', 'butForm', 
+			    {p1: {required: true},
+			     p2: {required: true}});		
+	    });
+	    
+	   
+	    
+	    function formValidate(arForm, arSubmit, arParams){
+		// задание обработчика на кнопку отправить
+		addEvent(document.getElementById(arSubmit), "click", checkForm);
+		
+		// Функция проверки формы
+		function checkForm(e){
+		    e = e || event;
+
+		    var flag=true;
+		    var chForm = document.forms[arForm];
+
+		    // проверка полей
+		    for(var i=0; i < chForm.elements.length; i++){
+			if(chForm.elements[i].name in arParams){
+			    if(chForm.elements[i].type == 'text'){
+				delMesageForm(chForm.elements[i]);
+				if(!chForm.elements[i].value) {
+				    flag=false;
+				    mesageForm(chForm.elements[i], 'Незаполнено поле!!!');
+				}
+			    }
+			}
+		    }
+		    
+		    // отмена действия по умолчанию
+		    try{
+			e.preventDefault();
+		    } catch(er) {
+			e.returnValue = false;
+		    }
+
+		    if(flag) chForm.submit();
+		}
+
+		// Функция показа информационного сообщения
+		function mesageForm(elem, mes){
+		    // выделение границы
+		    elem.style['border-color'] = 'RED';
+
+		    // выведение сообщения
+		    var mesage = document.createElement("div");
+		    var mesText = document.createTextNode(mes);
+
+		    mesage.appendChild(mesText);
+		    mesage.setAttribute('class', 'mesageForm')
+		    elem.parentNode.appendChild(mesage);
+		}
+		// Функция удаления информационного сообщения
+		function delMesageForm(elem){
+		    // выделение границы
+		    elem.style['border-color'] = '';
+
+		    // удаление сообщения
+		    var mesages = elem.parentNode.childNodes;
+		    for(var i=0; i<mesages.length; i++){
+		       if(mesages[i].nodeType === 1 && mesages[i].getAttribute('class') === 'mesageForm') elem.parentNode.removeChild(mesages[i]);
+		    }
+		}
+	    }
+	</script>	
+</head>
+
+<body>
+	<h1>Проверка формы перед отправкой</h1>
+	<form id="myForm" name="myForm" action="">
+	    <div>
+		    <label for="txt1">Поле 1</label>
+		    <input type="text" name="p1" id="txt1">
+	    </div>
+	    <div>
+		    <label for="txt2">Поле 2</label>
+		    <input type="text" name="p2" id="txt2">
+	    </div>
+	    <div>
+		    <label for="txt3">Поле 3</label>
+		    <input type="text" name="p3" id="txt3">
+	    </div>
+	    <div class="button">
+	    <a href="#" id="butForm">Передать форму</a>
+	    </div>
+	</form>
+</body>
+</html>
