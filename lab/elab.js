@@ -1,3 +1,29 @@
+// Полифил  для кроссбпаузерности requestAnimationFrame
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] 
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+
 // Наследует методы родительского класса в дочерний
 function extend(Child, Parent) {
     Child.prototype = inherit(Parent.prototype);
@@ -44,9 +70,7 @@ function removeDefault(event){
 
 // функция анимации
 function animate(obj, valName, valEnd, time, func){
-    var valStart;
-    var fps  = 50; // кадров в секунду (потом можно сделать изменяемую)
-    var timeStep = Math.round(1000/fps);
+    var valStart, timer;
 
     // стартовые значения параметров
     if(valName == 'scrollTop') {
@@ -57,13 +81,12 @@ function animate(obj, valName, valEnd, time, func){
 
     var start = Date.now(); // сохранить время начала
 
-    var timer = setTimeout(function step() {
+    timer = requestAnimationFrame(function step() {
         // вычислить сколько времени прошло с начала анимации
         var timePassed = Date.now() - start;
 
         // проверка последний ли шаг
         if (timePassed >= time) {
-            clearTimeout(timer);
             draw(obj, valName, valStart, valEnd, time);
 
             // вызов функции по завершению анимации
@@ -74,8 +97,8 @@ function animate(obj, valName, valEnd, time, func){
         // рисует состояние анимации, соответствующее времени timePassed
         draw(obj, valName, valStart, valEnd, timePassed);
 
-        setTimeout(step, timeStep);
-    }, timeStep);
+        timer = requestAnimationFrame(step);
+    });
 
     // функция изменения параметра
     function draw(obj, valName, valStart, valEnd, timePassed){
