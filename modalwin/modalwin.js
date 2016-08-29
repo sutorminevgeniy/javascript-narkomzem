@@ -23,6 +23,7 @@
 
             this.aHref = '';
             this.content = null;
+            this.contentParent = null;
 
             // подключение обработчика
             addEvent(this.modalClose, 'click', function(e){
@@ -32,22 +33,15 @@
                 that.hide();
                 that.close();
                 if(isAncor(that.aHref)) {
-                    document.body.appendChild(that.content);
+                    that.contentParent.appendChild(that.content);
                 } else {
                     that.removeContent();
                 }
+                that.aHref = '';
+                that.content = null;
+                that.contentParent = null;
             });           
         }
-        ModalWin.prototype.setContent = function (elem){
-            this.content = elem;
-            this.modalContent.appendChild(elem);
-        }
-        ModalWin.prototype.removeContent = function (){
-            var childs = this.modalContent.children;
-            for(i = childs.length-1; i >= 0; i--){
-                this.modalContent.removeChild(childs[i]);
-            }
-        };
         ModalWin.prototype.open = function (){
             this.modalFon.style['display'] = 'block';
         };
@@ -60,6 +54,22 @@
         ModalWin.prototype.hide = function (){
             this.modalFon.style['opacity'] = '';
         }
+        ModalWin.prototype.setContent = function (elem){
+            this.content = elem;
+            this.modalContent.appendChild(elem);
+        }
+        ModalWin.prototype.removeContent = function (){
+            var childs = this.modalContent.children;
+            for(i = childs.length-1; i >= 0; i--){
+                this.modalContent.removeChild(childs[i]);
+            }
+        };
+        ModalWin.prototype.setContentParent = function (elem){
+            this.contentParent = elem;
+        };
+        ModalWin.prototype.getContentParent = function (){
+            return this.contentParent;
+        };
 
         //---------------------------------------------------------------------
 
@@ -81,8 +91,30 @@
                     winW = window.innerWidth;
                     winH =  window.innerHeight;
 
-                    // вслывающая картинка
-                    if(isImg(aHref)) {
+                    if(isAncor(aHref)) { // якорь
+                        contentMod = document.getElementById(aHref.slice(1));
+
+                        if(!modWin) {
+                            modWin = new ModalWin();
+                        }
+
+                        modWin.aHref = aHref;
+                        modWin.setContentParent(contentMod.parentElement);
+                        modWin.setContent(contentMod);
+
+
+                            
+                        modWin.open();
+
+                        contentModH =  contentMod.offsetHeight;
+                        contentModW = contentMod.offsetWidth;
+
+                        liteM = document.getElementById('litebox');
+                        liteM.style['top'] = Math.round((winH-contentModH)/2)+'px';
+                        liteM.style['left'] = Math.round((winW-contentModW)/2)+'px';
+
+                        modWin.show();
+                    } else if(isImg(aHref)) { // вслывающая картинка
                         contentMod = document.createElement('img');
                         contentMod.setAttribute('id', 'liteboxImg');
                         contentMod.setAttribute('src', aHref);
@@ -109,11 +141,10 @@
 
                             modWin.show();
                         });
-                    }
-
-                    // якорь
-                    if(isAncor(aHref)) {
-                        contentMod = document.getElementById(aHref.slice(1));
+                    } else {
+                        contentMod = document.createElement('iframe');
+                        contentMod.setAttribute('id', 'liteboxImg');
+                        contentMod.setAttribute('src', aHref);
 
                         if(!modWin) {
                             modWin = new ModalWin();
@@ -121,18 +152,24 @@
 
                         modWin.aHref = aHref;
                         modWin.setContent(contentMod);
+
+                        addEvent(contentMod, 'load', function(){
                             
-                        modWin.open();
+                            modWin.open();
 
-                        contentModH =  contentMod.offsetHeight;
-                        contentModW = contentMod.offsetWidth;
+                            contentMod.style['height'] = (winH-100)+'px';
+                            contentMod.style['width'] = (winW-100)+'px';
+                            contentModH =  contentMod.offsetHeight;
+                            contentModW = contentMod.offsetWidth;
 
-                        liteM = document.getElementById('litebox');
-                        liteM.style['top'] = Math.round((winH-contentModH)/2)+'px';
-                        liteM.style['left'] = Math.round((winW-contentModW)/2)+'px';
+                            liteM = document.getElementById('litebox');
+                            liteM.style['top'] = Math.round((winH-contentModH)/2)+'px';
+                            liteM.style['left'] = Math.round((winW-contentModW)/2)+'px';
 
-                        modWin.show();
-                    } 
+                            modWin.show();
+                        });
+                    }
+
                 });
             }
         }
@@ -142,9 +179,9 @@
         function isImg(strURL) {
             strURL = strURL || '';
             var posDot, rashirenie;
-            var rashArray = ['jpg', 'jpeg', 'png', 'gif', 'bmp']
+            var rashArray = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
             
-            posDot = strURL.indexOf('.');
+            posDot = strURL.indexOf('.', strURL.length - 5);
             if(posDot === -1) {
                 return false;
             }
