@@ -24,7 +24,6 @@
         };
 }());
 
-
 // Наследует методы родительского класса в дочерний
 function extend(Child, Parent) {
     Child.prototype = inherit(Parent.prototype);
@@ -49,6 +48,13 @@ function addEvent(element, event_name, handler){
         element['on' + event_name] = handler; 
     } 
 }
+/*
+    function eventControl(e){
+        e = e || event;
+        var target = e.tafget || e.srcElement;
+
+    }
+*/
 // Удаляет обработчик к событию элемента
 function removeEvent(element, event_name, handler){ 
     if (element.removeEventListener) {
@@ -117,35 +123,6 @@ function animate(obj, valName, valEnd, time, func){
     }
 }
 
-// получение координат элемента
-function getCoords(elem) {
-  // Получаем прямоугольник.
-  var box = elem.getBoundingClientRect();
-
-  var body = document.body;
-  var docEl = document.documentElement;
-
-  // Считаем прокрутку страницы. Все браузеры, 
-  // кроме IE8- поддерживают свойство pageXOffset/pageYOffset. 
-  // В более старых IE, когда установлен DOCTYPE, прокрутку можно получить из documentElement, 
-  // ну и наконец если DOCTYPE некорректен – использовать body.
-  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
-  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
-
-  // В IE документ может быть смещен относительно левого верхнего угла. Получим это смещение.
-  var clientTop = docEl.clientTop || body.clientTop || 0;
-  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
-
-  // Добавим прокрутку к координатам окна и вычтем смещение html/body, 
-  // чтобы получить координаты всего документа.
-  var top = box.top + scrollTop - clientTop;
-  var left = box.left + scrollLeft - clientLeft;
-
-  return {
-    top: top,
-    left: left
-  };
-}
 
 // Получения масива тега из родителя
 function getChildTags(parent, tagName){
