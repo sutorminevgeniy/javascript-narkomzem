@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>transition</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    .accord .header {
+      cursor: pointer;
+    }
+    .accord .text {
+      background: pink;
+      height: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="accord">
+    <div class="header"><b>accordion</b></div>
+    <div class="text">
+      <p>text acoord</p>
+      <p>text acoord</p>
+      <p>text acoord</p>
+      <p>text acoord</p>
+      <p>text acoord</p>
+    </div>
+  </div>
+</body>
+<script>
+  var accord = document.querySelector('.accord');
+  var accordHead = document.querySelector('.accord .header')
+
+  var accordText = document.querySelector('.accord .text');
+  accordText.style.cssText = 'transition: inherit;\
+                        height: auto;\
+                        opacity: 0;\
+                        position: absolute;';
+  accordText.setAttribute('data-height', accordText.getBoundingClientRect().height);
+  accordText.style.cssText = 'height: 0;\
+                        opacity: 1;\
+                        position: relative;';
+
+  accordHead.addEventListener('click', function(e){
+    var elem = e.currentTarget;
+    var text = elem.parentElement.querySelector('.text');
+    var textHeight = 0;
+    var tHeight = 0;
+    if(!text.classList.contains('active')) {
+      // text.style.cssText = 'transition: inherit;\
+      //                       height: auto;\
+      //                       opacity: 0;\
+      //                       position: absolute;';
+      // tHeight = text.getBoundingClientRect().height + 'px';console.log(tHeight);
+      // text.style.cssText = 'height: 0;\
+      //                       opacity: 1;\
+      //                       position: relative;';
+
+
+      textHeight = text.getAttribute('data-height') + 'px';console.log(textHeight);
+    }
+    text.style.transition = 'height 2s linear';
+    text.style.height = textHeight;
+    text.classList.toggle('active');
+  })
+</script>
+</html>

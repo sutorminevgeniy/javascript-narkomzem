@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>animate</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    .bl {
+      width: 400px; height: 200px;
+      border: 1px solid #000;
+      margin: 10px;
+      position: relative;
+    }
+    .obj {
+      width: 20px; height: 30px;
+      background: blue;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    @keyframes slide {
+      0% {
+        left: 0;
+        top: 0;
+      }
+      50% {
+        left: 190px;
+        top: 170px;
+      }
+      100% {
+        left: 380px;
+        top: 0;
+      }
+    }
+    .bl1:hover .obj {
+      animation-name: slide;
+      animation-duration: 2s;
+      animation-timing-function: ease-in-out;
+      animation-delay: .5s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-fill-mode: forwards;
+    }
+    .bl1:active .obj {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body>
+  <div class="bl bl1">
+    <div class="obj"></div>
+  </div>
+</body>
+<script>
+
+</script>
+</html>

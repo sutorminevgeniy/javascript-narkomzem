@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>dragndrop</title>
+  <style>
+    #field {
+      width: 500px; height: 500px;
+      border: 1px solid #000;
+      margin: 10px auto;
+      position: relative;
+    }
+    #block {
+      width: 50px; height: 50px;
+      background: red;
+      position: absolute;
+      top: 0; left: 0;
+    }
+    #info {
+      width: 500px; height: 100px;
+      border: 1px solid blue;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="field">
+    <div id="block"></div>
+  </div>
+  <div id="info"></div>
+</body>
+<script>
+  var field = document.getElementById('field');
+  var info = document.getElementById('info');
+  var block = document.getElementById('block');
+  var textInfo;
+
+  block.addEventListener('mousedown', function(event){
+    var elem = event.target;
+    var fieldTop = field.offsetTop,
+        fieldLeft = field.offsetLeft;
+
+    var mouseTop = event.pageY - elem.offsetTop - fieldTop,
+        mouseLeft = event.pageX - elem.offsetLeft - fieldLeft;
+
+    var moveBlock = function(event){
+      elem.style.top = (event.pageY - fieldTop - mouseTop) + 'px';
+      elem.style.left = (event.pageX - fieldLeft - mouseLeft) + 'px';
+
+      textInfo = event.clientX + " x " + event.clientY;
+      textInfo += '<br>' + event.pageX + " x " + event.pageY;
+      textInfo += '<br>' + ( event.pageX - fieldLeft - mouseLeft) + 'px' + " x " + (event.pageY - fieldTop - mouseTop) + 'px';
+      info.innerHTML = textInfo;
+    };    
+
+    field.addEventListener('mousemove', moveBlock);
+
+    elem.addEventListener('mouseup', function(event){
+      field.removeEventListener('mousemove', moveBlock);
+    });
+  });
+  
+</script>
+</html>
