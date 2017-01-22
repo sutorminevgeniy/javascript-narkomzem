@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas</title>
+  <style>
+    canvas {
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="cnvs" width="1000" height="800"></canvas>
+
+  <script>
+    var canvas = document.getElementById('cnvs');
+    var ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+
+    ctx.fillRect(10,10,100,100);
+    ctx.clearRect(30,45,60,60);
+    ctx.strokeRect(50,50,50,50);
+
+    // Filled triangle
+    ctx.beginPath();
+    ctx.moveTo(150,25);
+    ctx.lineTo(230,25);
+    ctx.lineTo(150,105);
+    ctx.fill();
+
+    // Stroked triangle
+    ctx.beginPath();
+    ctx.moveTo(250,125);
+    ctx.lineTo(250,45);
+    ctx.lineTo(170,125);
+    ctx.closePath();
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(350,75,50,0,Math.PI*2,true); // Внешняя окружность
+    ctx.moveTo(385,75);
+    ctx.arc(350,75,35,0,Math.PI,false);  // рот (по часовой стрелке)
+    ctx.moveTo(340,65);
+    ctx.arc(335,65,5,0,Math.PI*2,true);  // Левый глаз
+    ctx.moveTo(370,65);
+    ctx.arc(365,65,5,0,Math.PI*2,true);  // Правый глаз
+    ctx.stroke();
+
+  </script>
+</body>
+</html>

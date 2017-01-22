@@ -22,6 +22,8 @@
       left: 0;
     }
 
+    /* _____________________________________________________________________________________________________*/
+
     @keyframes slide {
       0% {
         left: 0;
@@ -40,19 +42,76 @@
       animation-name: slide;
       animation-duration: 2s;
       animation-timing-function: ease-in-out;
-      animation-delay: .5s;
+      animation-delay: .2s;
       animation-iteration-count: infinite;
       animation-direction: alternate;
-      animation-fill-mode: forwards;
+      /*animation-fill-mode: forwards;*/
     }
     .bl1:active .obj {
       animation-play-state: paused;
+    }
+
+    /* _____________________________________________________________________________________________________*/
+    
+    @keyframes load {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .bl2:hover .obj {
+      animation-name: load;
+      animation-duration: 2s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+    .bl2 .obj {
+      width: 60px; height: 60px;
+      background: white;
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0; right: 0;
+      margin: auto;
+    }
+    .bl2 .obj>div {
+      width: 4px; height: 20px;
+      border-top: 20px solid rgba(0, 0, 0, 1);
+      border-bottom: 20px solid rgba(0, 0, 0, 0.6);
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 0; right: 0;
+      margin: auto;
+    }
+    .bl2 .obj>div.cherta2 {
+      transform: rotate(-45deg);
+      border-top: 20px solid rgba(0, 0, 0, 0.9);
+      border-bottom: 20px solid rgba(0, 0, 0, 0.5);
+    }
+    .bl2 .obj>div.cherta3 {
+      transform: rotate(-90deg);
+      border-top: 20px solid rgba(0, 0, 0, 0.8);
+      border-bottom: 20px solid rgba(0, 0, 0, 0.4);
+    }
+    .bl2 .obj>div.cherta4 {
+      transform: rotate(-135deg);
+      border-top: 20px solid rgba(0, 0, 0, 0.7);
+      border-bottom: 20px solid rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
 <body>
   <div class="bl bl1">
     <div class="obj"></div>
+  </div>
+  <div class="bl bl2">
+    <div class="obj">
+        <div class="cherta1"></div>
+        <div class="cherta2"></div>
+        <div class="cherta3"></div>
+        <div class="cherta4"></div>
+    </div>
   </div>
 </body>
 <script>
