@@ -19,8 +19,9 @@
 
     <style>
       .slide .item {
-        height: 200px;
         background: green;
+      }
+      .carousel-caption {
       }
     </style>
   </head>
@@ -40,27 +41,27 @@
       <div class="carousel-inner" role="listbox">
         <div class="item active">
           <!-- <img src="..." alt="..."> -->
-          <div class="carousel-caption">
+          <div style="height: 300px;"><div class="carousel-caption">
             slide item 0
-          </div>
+          </div></div>
         </div>
         <div class="item">
           <!-- <img src="..." alt="..."> -->
-          <div class="carousel-caption">
+          <div style="height: 400px;"><div class="carousel-caption">
             slide item 1
-          </div>
+          </div></div>
         </div>
         <div class="item">
           <!-- <img src="..." alt="..."> -->
-          <div class="carousel-caption">
+          <div style="height: 100px;"><div class="carousel-caption">
             slide item 2
-          </div>
+          </div></div>
         </div>
         <div class="item">
           <!-- <img src="..." alt="..."> -->
-          <div class="carousel-caption">
+          <div style="height: 200px;"><div class="carousel-caption">
             slide item 3
-          </div>
+          </div></div>
         </div>
       </div>
 
@@ -80,8 +81,26 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
     <script>
-      $('.carousel').carousel({
-        interval: 2000
+      $(document).ready(function(){
+        $('.carousel').carousel({
+          interval: false
+        });
+
+        var maxHeight = 0;
+        $('.carousel-inner .item').each(function(){
+          var h = $(this).height();
+
+          if(h > maxHeight) {
+            maxHeight = h;
+          }
+          console.log(h);
+        });
+
+        console.log(maxHeight);
+
+        $('.carousel-inner .item').each(function(){
+          $(this).height(maxHeight);
+        });
       });
     </script>
   </body>
